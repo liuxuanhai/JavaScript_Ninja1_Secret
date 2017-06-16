@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试组</title>
+    <script>
+        (function(){
+            var results;
+            this.assert=function assert(value,desc){
+                var li=document.createElement("li");
+                li.className=value?"pass":"fail";
+                li.appendChild(document.createTextNode(desc));
+                results.appendChild(li);
+                if(!value){
+                    li.parentNode.parentNode.className="fail";
+                };
+                return li;
+            };
+            this.test=function text(name,fn){
+                results=document.getElementById("results");
+                results=assert(true,name).appendChild(document.createElement("ul"));
+                fn();
+            };
+        })();
+
+        window.onload=function(){
+            test("one",function(){
+                assert(true,"one 1");
+                assert(true,"one 2");
+                assert(true,"one 3");
+            });
+            test("two",function(){
+                assert(true,"two 1");
+                assert(false,"two 2");
+                assert(true,"two 3");
+            })
+        }
+    </script>
+</head>
+<body>
+    <ul id="results">
+        
+    </ul>
+</body>
+</html>
