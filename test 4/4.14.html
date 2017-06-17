@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>递归函数简单应用</title>
+    <title>对arguments列表进行切片</title>
     <script src="../static/js/assert.js"></script>
 </head>
 <body>
     <ul id="results"></ul>
 </body>
 <script>
-    function chirp(n){
-        return n>1?chirp(n-1)+"-chirp":"chirp";
+    function multiMax(multi){
+        return multi * Math.max.apply(Math,Array.prototype.slice.call(arguments,1));
     };
-    assert(chirp(3) == "chirp-chirp-chirp","Calling the named function comes naturally");
+    assert(multiMax(3,1,2,3) === 9,"3*3=9(First arg,by largest.)");
 </script>
 </html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>遍历可变长度的参数列表</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function merge(root){
+        for(var i=1; i<arguments.length; i++){
+            for(var key in arguments[i]){
+                root[key]=arguments[i][key]
+            };
+        };
+        return root;
+    };
+    var merged=merge(
+        {name:"batou"},
+        {city:"shijiazhuang"}
+    );
+    assert(merged.name === "batou","The original name is intact");
+    assert(merged.city === "shijiazhuang","And the city has been copied over.");
+</script>
+</html>
