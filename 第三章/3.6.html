@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>构建for-each函数 演示函数上下文关系</title>
+    <script src="../第二章/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function forEach(list,callback){
+        for (var i=0; i<list.length; i++){
+            callback.call(list[i],i);
+        };
+    };
+    var weapons=['one','two','three'];
+    forEach(weapons,function(index){
+        assert(this == weapons[index],"Got the expected value of "+weapons[index]);
+    });
+</script>
+</html>

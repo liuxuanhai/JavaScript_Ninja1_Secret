@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>验证内联函数的标识</title>
+    <script src="../第二章/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    var ninja=function myNinja(){
+        assert(ninja === myNinja,"ninja=myNinja!");
+    };
+    ninja();
+    assert(typeof myNinja == "undefined","myNinja=undefined");
+</script>
+</html>

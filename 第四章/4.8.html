@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>存储一组独立函数</title>
+    <script src="../第二章/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    var store={
+        nextId:1,
+        cache:{},
+        add:function(fn){
+            if(!fn.id){
+                fn.id=this.nextId++;
+                return !!(this.cache[fn.id]=fn);
+            };
+        }
+    };
+    function ninja(){};
+    assert(store.add(ninja),"Function was safely added");
+    assert(store.add(ninja),"But it was only added once");
+    assert(store.cache[1] === ninja,"true");
+</script>
+</html>

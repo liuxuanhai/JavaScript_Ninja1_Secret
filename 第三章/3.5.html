@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>call()和apply()指定函数上下文</title>
+    <script src="../第二章/assert.js"></script>
+</head>
+<body>
+    <ul id="results">
+        
+    </ul>
+</body>
+<script>
+    function juggle(){
+        var result=0;
+        for(var i=0;i<arguments.length;i++){
+            result+=arguments[i]
+        };
+        this.result=result;
+    };
+    var ninja1={};
+    var ninja2={};
+    juggle.apply(ninja1,[1,2,3,4]);
+    juggle.call(ninja2,5,6,7,8);
+    assert(ninja1.result === 10,"juggled via apply");
+    assert(ninja2.result === 26,"juggled via call");
+</script>
+</html>
