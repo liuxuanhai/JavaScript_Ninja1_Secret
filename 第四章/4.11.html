@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组上的通用min()和max()函数</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function smalltest(array){
+        return Math.min.apply(Math,array);
+    };
+    function largetest(array){
+        return Math.max.apply(Math,array);
+    };
+    assert(smalltest([0,1,2,3]) === 0,"Located the smalltest value");
+    assert(largetest([0,1,2,3]) === 3,"Located the largetest vaule");
+</script>
+</html>
