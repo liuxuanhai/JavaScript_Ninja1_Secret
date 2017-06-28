@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>简单闭包</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    var outervalue="ninja";
+    function outerFunction(){
+        assert(outervalue=="ninja","I can see the ninja")
+    }
+    window.addEventListener("load",function(event){
+       outerFunction();
+    })
+</script>
+</html>

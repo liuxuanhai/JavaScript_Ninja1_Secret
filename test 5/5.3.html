@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包可以访问到什么内容</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    var outervalue="ninja";
+    var later;
+    function outerFunction(){
+        var innervalue="samruai";
+        function innerFunction(paramvalue){
+            assert(outervalue,"I can see the ninja");
+            assert(innervalue,"I can see the samruai");
+            assert(paramvalue,"I can see the wakizashi");
+            assert(tooLate,"I can see the ronin")
+        };
+        later=innerFunction;       
+    };
+    assert(!tooLate,"Outer can't see the ronin");
+    var tooLate="ronin";
+    outerFunction();
+    later("wakizashi");
+
+</script>
+</html>
