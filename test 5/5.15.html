@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>使用新功能包装旧函数</title>
+    <script src="../static/js/assert.js"></script>
+    <script src="../static/js/prototype_bind.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function wrap(object,method,wrapper){
+        var fn=object[method];
+
+        return object[method]=function(){
+            return wrapper.apply(this,[fn.bind(this)].concat(Array.prototype.slice.call(arguments)));
+        };
+    };
+    if(Prototype.Browser.Opera){
+        wrap(Element.methods,"readAttribute",function(original,elem,attr){
+            return arrt == "title" ? elem.title : original(elem,attr);
+        });
+    };
+</script>
+</html>

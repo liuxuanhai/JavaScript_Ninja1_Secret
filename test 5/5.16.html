@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在封闭的作用域中，强制使用一个名称</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    $=function(){
+        alert('not jQuery');
+    };
+    (function($){
+        $('img').on('click',function(event){
+            $(event.target).addClass('clickedOn')
+        })
+    })(jQuery)
+</script>
+</html>
