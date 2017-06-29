@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>使用闭包模拟私有变量</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function Ninja(){
+        var feints=0;
+        this.getFenits=function(){
+            return feints;
+        };
+        this.feint=function(){
+            feints++;
+        };
+    };
+    var ninja=new Ninja();
+    ninja.feint();
+    assert(ninja.getFenits()==1,"可用闭包获取函数内部变量")
+    assert(ninja.fecints==undefined,"不能直接获取函数内部变量")
+
+</script>
+</html>

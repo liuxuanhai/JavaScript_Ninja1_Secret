@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在原生函数上进行分部函数应用</title>
+    <script src="../static/js/assert.js"></script>
+    <script src="../static/js/prototype_partial.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    String.prototype.csv=String.prototype.split.partial(/,\s*/);
+    var results=("a,b,c").csv();
+    assert(results[0]=="a" && results[1]=="b" && results[2]=="c","The text values were split properly");
+</script>
+</html>

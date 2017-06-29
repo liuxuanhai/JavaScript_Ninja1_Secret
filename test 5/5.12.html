@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>一个更复杂的“分部”函数</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    Function.prototype.partial=function(){
+        var fn=this,
+            args=Array.prototype.slice.call(arguments);
+
+        return function(){
+            var arg=0;
+            for(var i = 0;i < args.length && arg<arguments.length;i++){
+                if(args[i]===undefined){
+                    args[i]=arguments[arg++];
+                };
+            };
+            return fn.apply(this,args);
+        };
+    };
+    var delay=setTimeout.partial(undefined,100);
+    delay(function(){
+        assert(true,"A call to this function will be delayed 100ms");
+    });
+</script>
+</html>

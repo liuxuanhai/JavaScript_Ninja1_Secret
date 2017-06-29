@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>给函数绑定一个特定的函数上下文</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <button type="button" id="test">Click Me!</button>
+    <ul id="results"></ul>
+</body>
+<script>
+    var button={
+        clicked:false,
+        click:function(){
+            this.clicked=true;
+            assert(button.clicked,"The button has been clicked");
+        }
+    };
+    var elem=document.getElementById("test");
+    elem.addEventListener("click",button.click,false);
+</script>
+</html>

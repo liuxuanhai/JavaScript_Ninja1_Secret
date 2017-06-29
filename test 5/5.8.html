@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>给事件处理程序绑定特定的上下文</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <button type="button" id="test">Click Me!</button>
+    <ul id="results"></ul>
+</body>
+<script>
+    function bind(context,name){
+        return function(){
+            context[name].apply(context,arguments);
+        };
+    };
+    var button={
+        clicked:false,
+        click:function(){
+            this.clicked=true;
+            assert(button.clicked,"The button has been clicked");
+            console.log(this);
+        }
+    };
+    var elem=document.getElementById("test");
+    elem.addEventListener("click",bind(button,"click"),false);
+</script>
+</html>

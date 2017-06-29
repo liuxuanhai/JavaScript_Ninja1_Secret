@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在计时器间隔回调中使用闭包</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <div id="box">在计时器间隔回调中使用闭包</div>
+    <ul id="results"></ul>
+</body>
+<script>
+    function animateIt(elementId){
+        var elem=document.getElementById(elementId);
+        var tick=0;
+        var timer=setInterval(function(){
+            if(tick<100){
+                elem.style.left=elem.style.top=tick+"px";
+                tick++;
+            }else{
+                clearInterval(timer);
+                assert(tick==100,"Tick accessed via a closure");
+                assert(elem,"Element also  accessed via a closure");
+                assert(timer,"Timer also accessed via a closure");
+            };
+        },10);
+    };
+    animateIt("box");
+</script>
+</html>
