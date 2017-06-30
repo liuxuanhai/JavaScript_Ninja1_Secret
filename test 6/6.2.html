@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>观察初始化活动的优先级</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function Ninja(){
+        this.swung=false;
+        this.swingSword=function(){
+            return !this.swung;
+        };
+    };
+    Ninja.prototype.swingSword=function(){
+        return this.swung;
+    };
+    var ninja=new Ninja();
+    assert(ninja.swingSword(),"观察初始化活动的优先级");
+</script>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>使用构造器创建一个新实例</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function Ninja(){
+        
+    };
+    Ninja.prototype.swingSword=function(){
+        return true;
+    };
+    var ninja1=Ninja();
+    assert(ninja1==undefined,"No instance of Ninja created");
+    var ninja2=new Ninja();
+    assert(ninja2 && ninja2.swingSword && ninja2.swingSword(),"Instance exists and method is callble");
+</script>
+</html>
