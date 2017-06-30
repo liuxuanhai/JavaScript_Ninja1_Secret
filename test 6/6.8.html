@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用原型实现继承</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function Person(){
+
+    };
+    Person.prototype.dance=function(){
+
+    };
+    function Ninja(){
+    };
+    Ninja.prototype=new Person();
+    Ninja.prototype.constructor=Ninja;
+    var ninja=new Ninja();
+    assert(ninja instanceof Ninja,"用原型实现继承");
+    assert(ninja instanceof Person,"用原型实现继承");
+    assert(ninja instanceof Object,"用原型实现继承");
+    assert(typeof ninja.dance == "function","用原型实现继承");
+    assert(ninja.constructor == Ninja,"用原型实现继承");
+</script>
+</html>

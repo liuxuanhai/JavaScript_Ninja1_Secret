@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>判断一个实例的类型及其构造器</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function Ninja(){
+    };
+    var ninja=new Ninja();
+    assert(typeof ninja == "object","判断一个实例的类型及其构造器");
+    assert(ninja instanceof Ninja,"判断一个实例的类型及其构造器");
+    assert(ninja.constructor==Ninja,"判断一个实例的类型及其构造器");
+</script>
+</html>
