@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>判断函数是否被作为构造函数调用，并纠正其错误</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function User(first,last){
+        if(!(this instanceof arguments.callee)){
+            return new User(first,last);
+        };
+        this.name=first+' '+last;
+    };
+
+    var name="John";
+    var user= User("Tom","blus");
+    assert(name == "John","没有污染全局作用域下变量");
+    assert(user instanceof User,"作为构造函数调用");
+    assert(user.name == "Tom blus","作为构造函数调用");
+</script>
+</html>

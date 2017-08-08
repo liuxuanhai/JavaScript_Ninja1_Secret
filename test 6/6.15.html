@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模拟Arrray功能</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function MyArray(){};
+    MyArray.prototype.length = 0;
+
+    (function(){
+        var methods=['push','pop','shift','unshift','slice','splick','join'];
+        for(var i = 0; i < methods.length; i++){
+            (function(name){
+                MyArray.prototype[name]=function(){
+                    return Array.prototype[name].apply(this,arguments);
+                };
+            })(methods[i]);
+        };
+    })();
+
+    var mine=new MyArray();
+    mine.push(1,2,3);
+    assert(mine.length == 3,"成功模拟Array功能");
+    assert(mine instanceof Array,"原型链可以找到Array类型");
+</script>
+</html>

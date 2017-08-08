@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>判断函数是否被作为构造函数调用</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+</body>
+<script>
+    function Test(){
+        return this instanceof arguments.callee;
+    }
+    assert(Test(),"作为普通函数调用");
+    assert(new Test(),"作为构造函数调用");
+</script>
+</html>
