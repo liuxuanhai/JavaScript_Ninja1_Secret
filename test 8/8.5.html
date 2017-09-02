@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>简单的异步测试套件</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    
+</body>
+<script>
+    (function(){
+        var queue=[],paused=false;
+
+        this.test=function(fn){
+            queue.push(fn);
+            runText();
+        };
+
+        this.pause=function(){
+            paused=true;
+        };
+
+        this.resume=function(){
+            paused=false;
+            setTimeout(runText,1);
+        };
+
+        function runText(){
+            if(!paused && queue.length){
+                queue.shift()();
+                if(!paused) resume();
+            }
+        }
+    })();
+
+</script>
+</html>

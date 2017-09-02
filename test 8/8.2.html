@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>一个长时间运行的函数</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+<table>
+    <tbody>
+        
+    </tbody>
+</table>
+</body>
+<script>
+    console.log(new Date().getSeconds());
+    var tbody=document.getElementsByTagName("tbody")[0];
+    for(var i=0; i<3000; i++){
+        var tr=document.createElement("tr");
+
+        for(var t=0; t<6; t++){
+            var td=document.createElement("td");
+
+            td.appendChild(document.createTextNode(i+","+t));
+
+            tr.appendChild(td);
+        };
+
+        tbody.appendChild(tr);
+    };
+    console.log(new Date().getSeconds());
+</script>
+</html>

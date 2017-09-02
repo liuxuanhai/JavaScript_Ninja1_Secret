@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理多个处理程序的中央定时器控制</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <div id="box" style="position: relative;">
+        Hello!
+    </div>
+</body>
+<script>
+    var timers={
+
+        timersID:0,
+
+        timers:[],
+
+        add:function(fn){
+            this.timers.push(fn);
+        },
+
+        start:function(){
+            if(this.timersID) return;
+            (function runNext(){
+                if(timers.timers.length>0){
+                    for(var i=0; i<timers.timers.length; i++){
+                        if(timers.timers[i]() === false){
+                            timers.timers.splice(i,1);
+                            i++;
+                        };
+                    };
+
+                    timers.timersID=setTimeout(runNext,0);
+                };
+            })();
+        },
+
+        stop:function(){
+            clearTimeout(this.timersID);
+            this.timersID=0;
+        }
+    };
+
+    var box=document.getElementById("box"),x=0,y=0;
+    timers.add(function(){
+        box.style.left=x+"px";
+        if(++x>500) return false;
+    });
+    timers.add(function(){
+        box.style.top=y+"px";
+        if(++y>1200) return false;
+    });
+    
+    timers.start();
+</script>
+</html>
