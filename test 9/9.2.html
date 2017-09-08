@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试eval()方法的返回结果</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+    <div id="opacity" style="opacity: 0.5; filter: alpha(opacity=50);">
+        
+    </div>
+
+<script>
+    var ninja=eval("({name:'ninja'})");
+    assert(ninja != undefined,"the ninja was created");
+    assert(ninja.name === "ninja","and with the expected property");
+
+    var fn=eval("(function(){return 'Ninja';})");
+    assert(typeof fn === "function","the functions was created");
+    assert(fn() === "Ninja","and returns expected value");
+
+    var ninja2=eval("{name:'ninja2'}");
+    assert(ninja2 != undefined,"ninja2 was created");
+    assert(ninja2.name === "ninja2","and with the expected property");
+    console.log(typeof ninja2);
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查找函数参数名称</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+<ul id="results"></ul>
+<script>
+    function argumentNames(fn){
+        var found=/^[\s\(]*function[^(]*\(\s*([^)]*?)\s*\)/.exec(fn.toString());
+
+        console.log(found);
+        return found && found[1] ? found[1].split(",") : [] ;
+    }
+
+    assert(argumentNames(function(){}).length === 0,"works on zero-arg functions");
+    assert(argumentNames(function(x){})[0] === "x","Single argument working");
+
+    var results=argumentNames(function(a,b,c,d,e){});
+    assert(results[0] === 'a' && results[1] === 'b' && results[2] === 'c' && results[3] === 'd' && results[4] === 'e',
+    "Multipe arguments working!")
+</script>
+</body>
+</html>
