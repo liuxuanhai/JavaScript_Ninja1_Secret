@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>利用一个对象创建一个with作用域</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+<ul id="results"></ul>
+<script>
+    var use="other";
+    var katana={
+        isSharp: true,
+        use: function(){
+            this.isSharp=!this.isSharp;
+        }
+    };
+
+    with(katana){
+        assert(use !== "other" && typeof use === "function",
+        "use is a function from the katana object");
+
+        assert(this !== katana,
+        "context isn't  changed;keeps its original value");
+    };
+
+    assert(use === "other",
+    "outside the with is unaffected");
+    assert(typeof isSharp === "undefined",
+    "outside the with the properties don't exist")
+</script>    
+</body>
+</html>
