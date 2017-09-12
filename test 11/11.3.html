@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实践特征仿真功能来修复浏览器bug</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+    <ul id="results"></ul>
+    <div>
+        <!-- comment #1-->
+    </div>
+    <div>
+        <!-- comment #2-->
+    </div>
+<script>
+    function getAllElements(name){
+        if(!window.findByTagWorksAsExpected){
+            window.findByTagWorksAsExpected=(function(){
+                var div=document.createElement("div");
+                div.appendChild(document.createComment("test"));
+                return div.getElementsByTagName("*").length === 0;
+            })();
+        };
+
+        var allElements=document.getElementsByTagName("*");
+
+        if(!window.findByTagWorksAsExpected){
+            for(var n=allElements.length-1;n>=0;n--){
+                if(allElements[n].nodeType === 8){
+                    allElements.splice(n,1);
+                };
+            };
+        };
+        console.log(allElements);
+        return allElements;
+    };
+
+    var elements=getAllElements();
+    var elementsCount=elements.length;
+
+    for(var i=0;i<elementsCount;i++){
+        assert(elements[i].nodeType === 1,
+        "Node is an element node");
+    }    
+</script>
+</body>
+</html>
