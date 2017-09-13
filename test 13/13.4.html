@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实现一个中央对象用于保存DOM元素信息</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+<ul id="results"></ul>
+<div title="Ninja Power!">
+    忍者之力
+</div>
+<div title="Secrets">
+    秘密
+</div>
+<script>
+(function(){
+    var cache={},
+        guidCounter=1;
+        expando="date"+new Date().getTime();
+
+    this.getData=function(elem){
+        var guid=elem[expando];
+        if(!guid){
+            guid=elem[expando]=guidCounter++;
+            cache[guid]={};
+        };
+        return cache[guid];
+    };
+
+    this.removeData=function(elem){
+        var guid=elem[expando];
+        if(!guid) return ;
+        delete cache[guid];
+        try{
+            delete elem[expando];
+        }catch(e){
+            if(elem.removeAttribute){
+                elem.removeAttribute(expando);
+            };
+        };
+    };
+
+    var elems=document.getElementsByTagName("div");
+
+    for(var i=0; i<elems.length; i++){
+        getData(elems[i]).ninja=elems[i].title;
+    };
+
+    for(var i=0; i<elems.length; i++){
+        assert(getData(elems[i]).ninja===elems[i].title,
+        "Stored data is "+getData(elems[i]).ninja);
+    };
+
+    for(var i=0; i<elems.length; i++){
+        removeData(elems[i]);
+        assert(getData(elems[i]).ninja===undefined,
+        "Stored data has been destroyed");
+    };
+})()
+</script>
+</body>
+</html>

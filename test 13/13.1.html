@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绑定事件处理程序时，设置正确的上下文</title>
+</head>
+<body>
+<script>
+    if(document.addEventListener){
+        this.addEvent=function(elem,type,fn){
+            elem.addEventListener(type,fn,false);
+            return fn;
+        };
+
+        this.removeEvent=function(elem,type,fn){
+            elem.removeEventListener(type,fn,false);
+        };
+    }else if(document.attachEvent){
+        this.addEvent=function(elem,type,fn){
+            var bound=function(){
+                return fn.apply(elem,arguments);
+            };
+            elem.attachEvent("on"+type,bound);
+            return bound;
+        };
+
+        this.removeEvent=function(elem,type,fn){
+            elem.detachEvent("on"+type,fn);
+        };
+    }
+</script>
+</body>
+</html>
