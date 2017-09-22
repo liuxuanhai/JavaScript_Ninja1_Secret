@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件处理程序的解绑函数</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+<ul id="results"></ul>
+<script>
+// 需要达成三个目标；
+// 1、将一个元素上的所有事件绑定都删除 
+// 2、讲一个元素上的指定类型事件绑定删除
+// 3、删除一个特定处理程序实例
+(function(){
+    this.removeEvent = function(elem, type, fn){
+        var data = getData(elem);
+        
+        if(!data.handlers) return;
+
+        // 定义一个函数，用于删除指定类型事件
+        var removeType = function(t){
+            data.handlers[t] = [];
+            tidyUp(elem,t);     //删除指定类型事件，参考13.6.html
+        };
+
+        // 删除所有事件
+        if(!type){
+            for (var t in data.handlers) removeType(t);
+            return;
+        };
+
+        var handlers = data.handlers[type];
+        if(!handlers) return;
+
+        // 删除指定事件
+        if(!fn){
+            removeType(type);
+            return;
+        };
+
+        // 删除一个特定处理程序实例
+        if(fn.guid){
+            for(var n=0; n < handlers.length; n++){
+                if(handlers[n].guid === fn.guid){
+                    handlers.splice(n--,1);
+                }
+            }
+        };
+
+        // 判断该类型是否为空，是则删除该类型
+        tidyUp(elem,type);
+
+    };
+})();
+</script>
+</body>
+</html>
