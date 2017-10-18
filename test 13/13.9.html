@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在元素上出发一个冒泡事件</title>
+    <script src="../static/js/assert.js"></script>
+    <script src="../static/js/element_event.js"></script>
+</head>
+<body>
+<ul id="results"></ul>
+<script>
+    function triggerEvent(elem,event){
+        // 获取元素数据以及元素的父元素（用于冒泡）
+        var elemData = getData(elem),   
+            parent = elem.parentNode || elem.ownerDocument;
+        
+        // 如果传入的event是一个字符串，则为此创建一个event对象
+        if(typeof event === "string"){
+            event = {type:event, target:elem};
+        };
+        // 对event属性进行规范化
+        event = fixEvent(event);
+
+        // 如果传入的元素有事件调度器，则执行该类型的事件处理程序
+        if(elemData.dispatcher){
+            elemData.dispatcher.call(elem,event);
+        };
+
+        // 除非显示停止冒泡，一直递归调用该函数，将事件向上冒泡到dom上
+        if(parent && !event.isDefaultprevented()){
+            triggerEvent(parent,event);
+        }   //如果dom到顶了则触发默认行为
+        else if(!parent && !event.isDefaultprevented()){
+            var targetData = getData(event.target);
+
+            // 判断模板元素有没有该事件的默认行为
+            if(event.target[event.type]){
+                targetData.disabled = true;
+                event.target[event.type]();
+                targetData.disabled = false;
+            }
+        }
+    }
+</script>
+</body>
+</html>

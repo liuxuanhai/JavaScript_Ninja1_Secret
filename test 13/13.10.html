@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>使用自定义事件</title>
+    <script src="../static/js/assert.js"></script>
+    <script src="../static/js/element_event.js"></script>
+    <style>
+        #whirlyThing {display: none;}
+    </style>
+</head>
+<body>
+<button type="button" id="clickMe">Start</button>
+<img id="whirlyThing" src="../ninja-code/chapter-13/whirly-thing.gif">
+<ul id="results"></ul>
+<script type="text/javascript">
+
+      addEvent(window,'load',function(){
+
+        var button = document.getElementById('clickMe');         //#1
+        addEvent(button,'click',function(){
+          performAjaxOperation(this);
+        });
+
+        var body = document.getElementsByTagName('body')[0];
+
+        addEvent(body,'ajax-start',function(e){                   //#2
+          document.getElementById('whirlyThing')
+            .style.display = 'inline-block';
+        });
+
+        addEvent(body,'ajax-complete',function(e){                //#3
+          document.getElementById('whirlyThing')
+            .style.display = 'none';
+        });
+
+      });
+function performAjaxOperation(target) {
+
+  triggerEvent(target,'ajax-start');
+
+  window.setTimeout(function(){
+    triggerEvent(target,'ajax-complete')
+  },5000);
+
+}
+    </script>
+</body>
+</html>
