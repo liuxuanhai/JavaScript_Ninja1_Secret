@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实现跨浏览器的DOM ready事件</title>
+    <script src="../static/js/assert.js"></script>
+    <script src="../static/js/element_event.js"></script>
+    <script src="../static/js/isEventSupported.js"></script>
+</head>
+<body>
+<ul id="results"></ul>
+<script>
+(function(){
+    var isReady = false,
+        contentLoadedHadnler;
+
+    function ready(){
+        if(!isReady){
+            triggerEvent(document,"ready");
+            isReady = true;
+        }
+    }
+
+    if(document.readyState === "complete"){
+        ready();
+    }
+
+    if(document.addEventListener){
+        contentLoadedHadnler = function(){
+            document.removeEventListener("DOMContentLoaded",contentLoadedHadnler,false);
+            ready();
+        };
+
+        document.addEventListener("DOMContentLoaded",contentLoadedHadnler,false);
+    }else if(document.attchEvent){
+        contentLoadedHadnler = function(){
+            if(document.readyState === "complete"){
+                document.detachEvent("onreadystatechange",contentLoadedHadnler);
+                ready();
+            }
+        };
+
+        document.attchEvent("onreadystatechange",contentLoadedHadnler);
+
+        var toplevel = false;
+        try{
+            toplevel = window.frameElement == null;
+        }catch(e){}
+
+        if(document.documentElement.doScroll && toplevel){
+            doScrollCheck();
+        }
+    }
+
+    function doScrollCheck(){
+        if(isReady) return;
+
+        try{
+            document.documentElement.doScroll("left");
+        }catch(e){
+            setTimeout(doScrollCheck,1);
+            return;
+        }
+    }
+})();
+</script>
+</body>
+</html>
