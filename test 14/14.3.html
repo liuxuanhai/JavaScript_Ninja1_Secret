@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在DOM中的多个位置插入DOM片段</title>
+    <script src="../static/js/assert.js"></script>
+</head>
+<body>
+<ul id="results"></ul>    
+<div id="test"><b>Hello</b>, I'm a ninja!</div>
+<div id="test2"></div>
+<script>
+    window.onload=function(){
+        function insert(elems, args, callback){
+
+        }
+    }
+
+    function getNodes(htmlString,doc,fragment){
+        var map = {                                                     //元素类型和特殊父容器之间的映射，【节点深度，父元素开启元素，父元素关闭元素】
+          "<td":[3, "<table><tbody><tr>", "</tr></tbody></table>"],
+          "<th":[3, "<table><tbody><tr>", "</tr></tbody></table>"],
+          "<tr":[2, "<table><thead>", "</thead></table>"],
+          "<option":[1, "<select multiple='multiple'>", "</select>"],
+          "<optgroup":[1, "<select multiple='multiple'>", "</select>"],
+          "<legend":[1, "<fieldset>", "</fieldset>"],
+          "<thead":[1, "<table>", "</table>"],
+          "<tbody":[1, "<table>", "</table>"],
+          "<tfoot":[1, "<table>", "</table>"],
+          "<colgroup":[1, "<table>", "</table>"],
+          "<caption":[1, "<table>", "</table>"],
+          "<col":[2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"],
+          "<link":[3, "<div></div><div>", "</div>"]
+        };        
+        
+        // 使用正则表达式匹配开启尖括号和需要注入的元素标签名
+        var tagName = htmlString.match(/<\w+/),
+            mapEntry = tagName ? map[tagName[0]] : null;            // 如果匹配了映射中的内容就获取该条目，否则，就构建一个深度为0的虚假空父标签
+            if (!mapEntry) mapEntry = [0, "", ""];
+
+        // 创建一个空div标签
+        var div = (doc || document).createElement("div");
+        // 将要注入的新标签进行包装，并注入到div中
+        div.innerHTML = mapEntry[1] + htmlString + mapEntry[2]; 
+
+        // 遍历刚才创建的dom数，遍历深度为map条目里定义的值。最终的值应该是新创建的元素的父元素
+        while(mapEntry[0]--) div = div.lastChild;
+
+        if(fragment){
+            while(div.firstChild){
+                fragment.appendChild(div.firstChild);
+            }
+        }
+
+        return div.childNodes;
+    };
+
+    assert(getNodes("<td>test</td><td>test2</td>").length === 2, "Get two nodes back from the method.");
+    assert(getNodes("<td>test</td>")[0].nodeName === "TD", "Verify that we're getting the right node.");
+</script>     
+</body>
+</html>
