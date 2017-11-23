@@ -16,7 +16,7 @@ var timers = {
                 for (var i = 0; i < timers.timers.length; i++) {
                     if (timers.timers[i]() === false) {
                         timers.timers.splice(i, 1);
-                        i++;
+                        i--;
                     };
                 };
 
